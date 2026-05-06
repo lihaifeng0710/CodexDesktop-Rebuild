@@ -92,7 +92,7 @@ jobs:
           SKIP_NOTARIZE: "true"
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Codex-macOS-${{ matrix.arch }}
           path: |
@@ -138,7 +138,7 @@ jobs:
         run: npm run build:win-x64
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Codex-Windows-x64
           path: |
@@ -184,7 +184,7 @@ jobs:
         run: npm run build:linux-${{ matrix.arch }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Codex-Linux-${{ matrix.arch }}
           path: |
@@ -247,7 +247,7 @@ jobs:
           git push origin HEAD --tags
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           path: artifacts
 
@@ -256,7 +256,7 @@ jobs:
 
       - name: Create Release
         if: steps.version.outputs.version != ''
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ steps.version.outputs.version }}
           name: Codex ${{ steps.version.outputs.version }}
