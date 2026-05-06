@@ -130,15 +130,14 @@ function buildMac(platform) {
   // 4. Replace codex CLI
   replaceCodex(platform, resourcesDir, "codex");
 
-  // 5. Create ZIP
+  // 5. Create DMG
   const version = getVersion(asarDir);
-  const zipName = `Codex-${platform}-${version}.zip`;
-  const zipPath = path.join(OUT_DIR, zipName);
-  console.log(`   [zip] ${zipName}`);
-  execSync(`zip -r -y -q "${zipPath}" Codex.app`, { cwd: outAppDir });
-
-  const sizeMB = (fs.statSync(zipPath).size / 1048576).toFixed(1);
-  console.log(`   [ok] ${zipPath} (${sizeMB} MB)`);
+  const dmgName = `Codex-${platform}-${version}.dmg`;
+  const dmgPath = path.join(OUT_DIR, dmgName);
+  console.log(`   [dmg] ${dmgName}`);
+  execSync(`hdiutil create -volname Codex -srcfolder "${outAppDir}" -ov -format UDZO "${dmgPath}"`, { stdio: "pipe" });
+  const sizeMB = (fs.statSync(dmgPath).size / 1048576).toFixed(1);
+  console.log(`   [ok] ${dmgPath} (${sizeMB} MB)`);
 }
 
 // ─── Windows build ──────────────────────────────────────────────
